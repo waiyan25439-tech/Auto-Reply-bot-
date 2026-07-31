@@ -1,0 +1,27 @@
+name: Run Telegram Bot 24/7
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # ၁၅ မိနစ်တစ်ကြိမ် ပြန်လည်စစ်ဆေးရန်
+  workflow_dispatch: 
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # သင့် Bot ကုဒ်သုံးထားသော python-telegram-bot ကို ထည့်သွင်းရန်
+      - name: Install Dependencies
+        run: pip install python-telegram-bot gTTS
+
+      # Bot ကို စတင် run ပေးမယ့်နေရာ
+      - name: Start Telegram Bot
+        run: python bot.py
+        
